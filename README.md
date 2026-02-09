@@ -13,23 +13,7 @@ Screen Usage: The board is adjusted to occupy 100% of the window height, with a 
 Custom Style: The scrollbars are styled (gray on a light background) for a more modern and unobtrusive appearance (Webkit compatible).
 
 Installation
-Download the plugin archive or clone this repository.
-
-Create a folder named ScrollableColumns in the plugins/ directory of your Kanboard installation.
-
-Transfer the files into this folder.
-
-The file structure should look like this:
-
-Plaintext
-plugins/
-└── ScrollableColumns/
-    ├── Assets/
-    │   └── css/
-    │       └── style.css
-    └── Plugin.php
-Requirements
-Kanboard (Tested with standard plugin structure)
+Download the plugin archive or clone this repository and put it in the plugin file of your kanboard.
 
 Technical Information
 The plugin injects a CSS stylesheet (style.css) via the template:layout:css hook. It modifies the behavior of the main container (#main, #board-container) to prevent global page scrolling and enable it only at the task list level.
