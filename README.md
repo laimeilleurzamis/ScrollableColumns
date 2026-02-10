@@ -1,23 +1,29 @@
-# Scrollable Columns
+Scrollable Columns
+==============================
 
 This Kanboard plugin modifies the default board layout to make columns scrollable independently while keeping the headers fixed.
 
-Features
-Independent Scrolling: Each column on the board has its own vertical scrollbar. This allows you to scroll through long task lists without losing sight of the other columns.
+Author
+------
 
-Fixed Headers: Column headers remain visible while scrolling through tasks, as the scrolling applies only to the task list (.board-task-list).
+- laimeilleurzamis
+- License MIT
 
-Screen Usage: The board is adjusted to occupy 100% of the window height, with a dynamic calculation for the task area (calc(100vh - 170px)).
+Requirements
+------------
 
-Custom Style: The scrollbars are styled (gray on a light background) for a more modern and unobtrusive appearance (Webkit compatible).
+- Kanboard >= 1.0.35
 
 Installation
-Download the plugin archive or clone this repository and put it in the plugin file of your kanboard.
+------------
 
-Technical Information
-The plugin injects a CSS stylesheet (style.css) via the template:layout:css hook. It modifies the behavior of the main container (#main, #board-container) to prevent global page scrolling and enable it only at the task list level.
+You have the choice between 3 methods:
 
-Author
-Author: laimeilleurzamis
+1. Install the plugin from the Kanboard plugin manager in one click
+2. Download the zip file and decompress everything under the directory `plugins/ScrollableColumns`
+3. Clone this repository into the folder `plugins/ScrollableColumns`
+
+
+Note: Plugin folder is case-sensitive.
 
 Version: 1.0.0
