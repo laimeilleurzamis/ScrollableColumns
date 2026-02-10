@@ -1,4 +1,4 @@
-Scrollable Columns
+# Scrollable Columns
 
 This Kanboard plugin modifies the default board layout to make columns scrollable independently while keeping the headers fixed.
 
