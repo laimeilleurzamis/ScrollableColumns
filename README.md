@@ -1,5 +1,3 @@
-Here is the English translation of the README.md for your GitHub repository.
-
 Scrollable Columns
 This Kanboard plugin modifies the default board layout to make columns scrollable independently while keeping the headers fixed.
 
