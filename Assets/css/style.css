@@ -1,85 +1,93 @@
 /**
- * Global application reset
- * Ensures the viewport is fully utilized and prevents double scrollbars.
+ * Scrollable Columns - Version Robuste (Compatible GecosTheme)
  */
-html, body {
-    height: 100%;
-    overflow-y: hidden;
+
+/* ==========================================================================
+   1. CIBLAGE ET VERROUILLAGE (Page Tableau Uniquement)
+   ========================================================================== */
+/* Utilise :has() pour détecter la présence du tableau #board-container.
+   Cela garantit que le code s'applique UNIQUEMENT sur la page Board,
+   sans casser le Dashboard ou le Profil. */
+
+html:has(#board-container),
+body:has(#board-container) {
+    height: 100vh !important;
+    overflow: hidden !important; /* Coupe le scroll de la page entière */
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-/* 1. Layout Structure
-   Targets specific Kanboard views (Board and Project List) to enforce a flexbox 
-   layout that prevents page-level scrolling in favor of internal component scrolling. */
-body.board-show, body.project-view-list,
-body.board-show html, body.project-view-list html {
-    height: 100%;
-    overflow: hidden;
+/* ==========================================================================
+   2. STRUCTURE FLEXIBLE
+   ========================================================================== */
+/* Force le conteneur principal à faire la hauteur de l'écran et organise le contenu */
+body:has(#board-container) #main {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
 }
 
-body.board-show #main, 
-body.project-view-list #main {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+/* Le conteneur du tableau prend tout l'espace restant sous l'en-tête */
+body:has(#board-container) #board-container {
+    flex: 1 !important;
+    height: auto !important;
+    overflow-x: auto !important; /* Scroll horizontal activé */
+    overflow-y: hidden !important;
+    margin: 0 !important;
 }
 
-/* 2. Kanban Board View
-   Ensures the board container and table occupy the full available height.
-   The .board-task-list height is calculated to account for headers and padding. */
-body.board-show #board-container {
-    height: 100%;
-    overflow-x: auto;
+body:has(#board-container) table.board-table {
+    height: 100% !important;
 }
 
-body.board-show table.board-table {
-    height: 100%;
+/* ==========================================================================
+   3. LES COLONNES SCROLLABLES (Le cœur du correctif)
+   ========================================================================== */
+body:has(#board-container) .board-task-list {
+    /* 1. On définit la hauteur max par rapport à l'écran.
+       Ajustez "180px" si le bas des colonnes est coupé (hauteur de votre header Gecos) */
+    height: calc(100vh - 180px) !important;
+    
+    /* 2. On active le scroll interne */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    
+    /* 3. CRUCIAL : On écrase la "min-height" imposée par le JS de Kanboard */
+    min-height: 0 !important;
+    max-height: calc(100vh - 180px) !important;
+    
+    /* Esthétique */
+    padding-right: 5px !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0 !important;
 }
 
-.board-task-list {
-    height: calc(100vh - 170px);
-}
-
-/* 3. Task List View
-   Forces the standard list view into a block container with a fixed height 
-   to enable independent scrolling. */
-.table-list {
+/* ==========================================================================
+   4. AUTRES VUES (Liste Projets)
+   ========================================================================== */
+/* On s'assure de ne pas toucher au Dashboard (qui a l'ID #dashboard) */
+body.project-view-list .table-list {
     display: block;
     height: calc(100vh - 120px);
-}
-
-/* 4. Scroll Optimization
-   Applies vertical scrolling and standardized padding to both Kanban columns 
-   and the project list view. */
-.board-task-list, 
-.table-list {
     overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 5px;
-    box-sizing: border-box;
 }
 
-/* 5. Custom Scrollbar Styling (Webkit)
-   Enhances UI consistency across different browsers by styling the scrollbar 
-   track and thumb for scrollable containers. */
-.board-task-list::-webkit-scrollbar,
-.table-list::-webkit-scrollbar {
+/* ==========================================================================
+   5. STYLE DES SCROLLBARS
+   ========================================================================== */
+::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
-
-.board-task-list::-webkit-scrollbar-track,
-.table-list::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
 }
-
-.board-task-list::-webkit-scrollbar-thumb,
-.table-list::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #c1c1c1;
     border-radius: 4px;
 }
-
-.board-task-list::-webkit-scrollbar-thumb:hover,
-.table-list::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
