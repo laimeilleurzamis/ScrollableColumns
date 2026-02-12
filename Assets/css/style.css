@@ -1,46 +1,85 @@
+/**
+ * Global application reset
+ * Ensures the viewport is fully utilized and prevents double scrollbars.
+ */
 html, body {
     height: 100%;
     overflow-y: hidden;
 }
 
-#main {
+/* 1. Layout Structure
+   Targets specific Kanboard views (Board and Project List) to enforce a flexbox 
+   layout that prevents page-level scrolling in favor of internal component scrolling. */
+body.board-show, body.project-view-list,
+body.board-show html, body.project-view-list html {
     height: 100%;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
-#board-container {
+body.board-show #main, 
+body.project-view-list #main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 2. Kanban Board View
+   Ensures the board container and table occupy the full available height.
+   The .board-task-list height is calculated to account for headers and padding. */
+body.board-show #board-container {
     height: 100%;
     overflow-x: auto;
 }
 
-table.board-table {
+body.board-show table.board-table {
     height: 100%;
 }
 
 .board-task-list {
-    height: calc(100vh - 170px); 
-    overflow-y: auto; 
+    height: calc(100vh - 170px);
+}
+
+/* 3. Task List View
+   Forces the standard list view into a block container with a fixed height 
+   to enable independent scrolling. */
+.table-list {
+    display: block;
+    height: calc(100vh - 120px);
+}
+
+/* 4. Scroll Optimization
+   Applies vertical scrolling and standardized padding to both Kanban columns 
+   and the project list view. */
+.board-task-list, 
+.table-list {
+    overflow-y: auto;
     overflow-x: hidden;
     padding-right: 5px;
     box-sizing: border-box;
 }
 
-.board-task-list::-webkit-scrollbar {
+/* 5. Custom Scrollbar Styling (Webkit)
+   Enhances UI consistency across different browsers by styling the scrollbar 
+   track and thumb for scrollable containers. */
+.board-task-list::-webkit-scrollbar,
+.table-list::-webkit-scrollbar {
     width: 8px;
 }
 
-.board-task-list::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+.board-task-list::-webkit-scrollbar-track,
+.table-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
     border-radius: 4px;
 }
 
-.board-task-list::-webkit-scrollbar-thumb {
-    background: #c1c1c1; 
+.board-task-list::-webkit-scrollbar-thumb,
+.table-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
     border-radius: 4px;
 }
 
-.board-task-list::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8; 
+.board-task-list::-webkit-scrollbar-thumb:hover,
+.table-list::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }
