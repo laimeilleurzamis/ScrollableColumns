@@ -1,26 +1,26 @@
 /**
- * Scrollable Columns - Version Robuste (Compatible GecosTheme)
+ * Scrollable Columns - Robust Version (GecosTheme Compatible)
  */
 
 /* ==========================================================================
-   1. CIBLAGE ET VERROUILLAGE (Page Tableau Uniquement)
+   1. TARGETING AND LOCKING (Board Page Only)
    ========================================================================== */
-/* Utilise :has() pour détecter la présence du tableau #board-container.
-   Cela garantit que le code s'applique UNIQUEMENT sur la page Board,
-   sans casser le Dashboard ou le Profil. */
+/* Uses :has() to detect the presence of the #board-container.
+   This ensures that the code applies ONLY to the Board page,
+   without breaking the Dashboard or Profile pages. */
 
 html:has(#board-container),
 body:has(#board-container) {
     height: 100vh !important;
-    overflow: hidden !important; /* Coupe le scroll de la page entière */
+    overflow: hidden !important; /* Disables scrolling for the entire page */
     margin: 0 !important;
     padding: 0 !important;
 }
 
 /* ==========================================================================
-   2. STRUCTURE FLEXIBLE
+   2. FLEXIBLE STRUCTURE
    ========================================================================== */
-/* Force le conteneur principal à faire la hauteur de l'écran et organise le contenu */
+/* Forces the main container to take up the full screen height and organizes content */
 body:has(#board-container) #main {
     height: 100vh !important;
     display: flex !important;
@@ -29,11 +29,11 @@ body:has(#board-container) #main {
     padding-bottom: 0 !important;
 }
 
-/* Le conteneur du tableau prend tout l'espace restant sous l'en-tête */
+/* The board container takes up all remaining space below the header */
 body:has(#board-container) #board-container {
     flex: 1 !important;
     height: auto !important;
-    overflow-x: auto !important; /* Scroll horizontal activé */
+    overflow-x: auto !important; /* Horizontal scroll enabled */
     overflow-y: hidden !important;
     margin: 0 !important;
 }
@@ -43,31 +43,31 @@ body:has(#board-container) table.board-table {
 }
 
 /* ==========================================================================
-   3. LES COLONNES SCROLLABLES (Le cœur du correctif)
+   3. SCROLLABLE COLUMNS (The Core Fix)
    ========================================================================== */
 body:has(#board-container) .board-task-list {
-    /* 1. On définit la hauteur max par rapport à l'écran.
-       Ajustez "180px" si le bas des colonnes est coupé (hauteur de votre header Gecos) */
+    /* 1. Define max height relative to the screen.
+       Adjust "180px" if the bottom of the columns is cut off (height of your Gecos header) */
     height: calc(100vh - 180px) !important;
     
-    /* 2. On active le scroll interne */
+    /* 2. Enable internal scrolling */
     overflow-y: auto !important;
     overflow-x: hidden !important;
     
-    /* 3. CRUCIAL : On écrase la "min-height" imposée par le JS de Kanboard */
+    /* 3. CRITICAL: Override the "min-height" imposed by Kanboard's JS */
     min-height: 0 !important;
     max-height: calc(100vh - 180px) !important;
     
-    /* Esthétique */
+    /* Aesthetics */
     padding-right: 5px !important;
     box-sizing: border-box !important;
     margin-bottom: 0 !important;
 }
 
 /* ==========================================================================
-   4. AUTRES VUES (Liste Projets)
+   4. OTHER VIEWS (Project List)
    ========================================================================== */
-/* On s'assure de ne pas toucher au Dashboard (qui a l'ID #dashboard) */
+/* Ensures the Dashboard (which has the ID #dashboard) is not affected */
 body.project-view-list .table-list {
     display: block;
     height: calc(100vh - 120px);
@@ -75,7 +75,7 @@ body.project-view-list .table-list {
 }
 
 /* ==========================================================================
-   5. STYLE DES SCROLLBARS
+   5. SCROLLBAR STYLING
    ========================================================================== */
 ::-webkit-scrollbar {
     width: 8px;
